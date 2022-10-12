@@ -2,6 +2,7 @@ import unittest
 from sudokuException import ExpectionSetNumberRowColumn
 from sudokuException import ExpectionSetNumberMatrix
 from sudoku import Sudoku
+from parameterized import parameterized
 
 
 class TestSudoku(unittest.TestCase):
@@ -32,85 +33,25 @@ class TestSudoku(unittest.TestCase):
         self.assertEqual(sudoku.board[1][1], 9)
         self.assertEqual(sudoku.board[1][2], 0)
 
-    def test_set_number_validate_matrix(self):
-        sudoku = Sudoku()
-        sudoku.setNumber(1, 1, 9)
-        with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(2, 2, 9)
-        self.assertEqual(sudoku.board[1][1], 9)
-        self.assertEqual(sudoku.board[2][2], 0)
+    @parameterized.expand([
 
-    def test_set_number_validate_matrix1(self):
+        (1, 1, 9, 2, 2, 9, 0),
+        (0, 0, 9, 2, 1, 9, 0),
+        (0, 0, 9, 2, 2, 9, 0),
+        (6, 6, 9, 8, 8, 9, 0),
+        (6, 6, 9, 8, 7, 9, 0),
+        (0, 6, 9, 1, 7, 9, 0),
+        (6, 0, 9, 7, 1, 9, 0),
+        (6, 3, 9, 7, 4, 9, 0),
+        (6, 3, 9, 8, 4, 9, 0),
+        ])
+    def test_set_number_validate_matrix(self, a, b, c, d, e, f, g):
         sudoku = Sudoku()
-        sudoku.setNumber(0, 0, 9)
+        sudoku.setNumber(a, b, c)
         with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(2, 1, 9)
-        self.assertEqual(sudoku.board[0][0], 9)
-        self.assertEqual(sudoku.board[2][1], 0)
-
-    def test_set_number_validate_matrix2(self):
-        sudoku = Sudoku()
-        sudoku.setNumber(0, 0, 9)
-        with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(2, 2, 9)
-        self.assertEqual(sudoku.board[0][0], 9)
-        self.assertEqual(sudoku.board[2][2], 0)
-
-    def test_set_number_validate_matrix3(self):
-        sudoku = Sudoku()
-        sudoku.setNumber(6, 6, 9)
-        with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(8, 8, 9)
-        self.assertEqual(sudoku.board[6][6], 9)
-        self.assertEqual(sudoku.board[8][8], 0)
-
-    def test_set_number_validate_matrix4(self):
-        sudoku = Sudoku()
-        sudoku.setNumber(6, 6, 9)
-        with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(8, 7, 9)
-        self.assertEqual(sudoku.board[6][6], 9)
-        self.assertEqual(sudoku.board[8][7], 0)
-
-    def test_set_number_validate_matrix5(self):
-        sudoku = Sudoku()
-        sudoku.setNumber(0, 6, 9)
-        with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(1, 7, 9)
-        self.assertEqual(sudoku.board[0][6], 9)
-        self.assertEqual(sudoku.board[1][7], 0)
-
-    def test_set_number_validate_matrix6(self):
-        sudoku = Sudoku()
-        sudoku.setNumber(6, 0, 9)
-        with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(7, 1, 9)
-        self.assertEqual(sudoku.board[6][0], 9)
-        self.assertEqual(sudoku.board[7][1], 0)
-
-    def test_set_number_validate_matrix7(self):
-        sudoku = Sudoku()
-        sudoku.setNumber(6, 0, 9)
-        with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(7, 1, 9)
-        self.assertEqual(sudoku.board[6][0], 9)
-        self.assertEqual(sudoku.board[7][1], 0)
-
-    def test_set_number_validate_matrix7(self):
-        sudoku = Sudoku()
-        sudoku.setNumber(6, 3, 9)
-        with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(7, 4, 9)
-        self.assertEqual(sudoku.board[6][3], 9)
-        self.assertEqual(sudoku.board[7][4], 0)
-
-    def test_set_number_validate_matrix8(self):
-        sudoku = Sudoku()
-        sudoku.setNumber(6, 3, 9)
-        with self.assertRaises(ExpectionSetNumberMatrix):
-            sudoku.setNumber(8, 4, 9)
-        self.assertEqual(sudoku.board[6][3], 9)
-        self.assertEqual(sudoku.board[8][4], 0)
+            sudoku.setNumber(d, e, f)
+        self.assertEqual(sudoku.board[a][b], f)
+        self.assertEqual(sudoku.board[d][e], g)
 
 
 if __name__ == '__main__':
