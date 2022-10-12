@@ -17,7 +17,16 @@ class TestSudoku(unittest.TestCase):
         sudoku.setNumber(1, 1, 9)
         self.assertEqual(sudoku.board[1][1], 9)
 
-    def test_set_number_validate_column(self):
+    @parameterized.expand([(2, 1), (1, 2)])
+    def test_set_number_validate_column(self, a, b):
+        sudoku = Sudoku()
+        sudoku.setNumber(1, 1, 9)
+        with self.assertRaises(ExpectionSetNumberRowColumn):
+            sudoku.setNumber(a, b, 9)
+        self.assertEqual(sudoku.board[1][1], 9)
+        self.assertEqual(sudoku.board[a][b], 0)
+
+    """ def test_set_number_validate_column(self):
         sudoku = Sudoku()
         sudoku.setNumber(1, 1, 9)
         with self.assertRaises(ExpectionSetNumberRowColumn):
@@ -31,7 +40,7 @@ class TestSudoku(unittest.TestCase):
         with self.assertRaises(ExpectionSetNumberRowColumn):
             sudoku.setNumber(1, 2, 9)
         self.assertEqual(sudoku.board[1][1], 9)
-        self.assertEqual(sudoku.board[1][2], 0)
+        self.assertEqual(sudoku.board[1][2], 0) """
 
     @parameterized.expand([
 
@@ -43,7 +52,7 @@ class TestSudoku(unittest.TestCase):
         (0, 6, 9, 1, 7, 9, 0),
         (6, 0, 9, 7, 1, 9, 0),
         (6, 3, 9, 7, 4, 9, 0),
-        (6, 3, 9, 8, 4, 9, 0),
+        (6, 3, 9, 8, 4, 9, 0),   
         ])
     def test_set_number_validate_matrix(self, a, b, c, d, e, f, g):
         sudoku = Sudoku()
